@@ -1,3 +1,5 @@
+from operator import neg
+
 class M:
     nullish = 0
     jan = 31
@@ -23,26 +25,65 @@ class M:
             sum = sum + i
         return(sum)
 
+mode = int(input("Type 1 to - Mode 1: Since the first year day | Type 2 to - Mode 2: Between two dates: "))
 
-day = int(input('type day here: '))
-month = int(input('type month here: '))
-isBisext = int(input('Confirm: This is a bisext year? Confirm with 1 | Deny with 0: '))
+if mode == 1:
+    day = int(input('type day here: '))
+    month = int(input('type month here: '))
+    isBisext = int(input('Confirm: This is a bisext year? Confirm with 1 | Deny with 0: '))
+    if day <= 31 and month <= 12:
+        if isBisext == 1:
+            monthArr = M.monthsBi[0:month+1]
+            monthSum = M._sum(monthArr)
+            totalDays = monthSum + day
+            print(totalDays)
+        elif isBisext == 0:
+            monthArr = (M.months[0:month+1])
+            monthSum = M._sum(monthArr)
+            totalDays = monthSum + day
+            print('is the', totalDays,'º day of the year')
+            
+if mode == 2:
+    firstDay = int(input('type the initial day here: '))
+    firstMonth = int(input('type month here: '))
 
+    secondDay = int(input('type the final day here: '))
+    secondMonth = int(input('type month here: '))
 
-if day <= 31 and month <= 12:
-    if isBisext == 1:
-        monthArr = M.monthsBi[0:month+1]
+    if firstDay and secondDay <= 31  and firstMonth and secondMonth <= 12:
+        monthArr = M.months[firstMonth:secondMonth]
         monthSum = M._sum(monthArr)
-        totalDays = monthSum + day
-        print(totalDays)
-    elif isBisext == 0:
-        monthArr = (M.months[0:month+1])
-        print(monthArr)
-        monthSum = M._sum(monthArr)
-        print(monthSum)
-        print(day)
-        totalDays = monthSum + day
-        print('is the', totalDays,'º day of the year')
+        if firstMonth == secondMonth:
+            monthSum = 0
+            daySum = firstDay - secondDay
+            if daySum < 0:
+                num = neg(daySum)
+                totalSum = monthSum + num
+                print(totalSum)
+            elif daySum > 0:
+                totalSum = monthSum + daySum
+                print(totalSum)
+
+        elif monthSum == 0:
+            monthSum = 30
+            daySum = firstDay - secondDay
+            if daySum < 0:
+                num = neg(daySum)
+                totalSum = monthSum + num
+                print(totalSum)
+            elif daySum > 0:
+                totalSum = monthSum + daySum
+                print(totalSum)
+                
+        elif monthSum > 0:
+            monthArr = M.months[firstMonth:secondMonth-1]
+            monthSum = M._sum(monthArr)
+            daySum = secondDay - firstDay
+            totalSum = monthSum + daySum
+            print(totalSum)
+            
+        
+
     
         
         
